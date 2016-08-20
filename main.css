@@ -78,3 +78,15 @@ body #content .content {
   position: relative;
   top: 25%;
 }
+
+.margin-top__large {
+  margin-top: 20px;
+}
+
+.margin-top__med {
+  margin-top: 12px;
+}
+
+.margin-top__small {
+  margin-top: 5px;
+}

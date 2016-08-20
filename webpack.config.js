@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
+var DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
     entry: {
@@ -13,13 +14,15 @@ module.exports = {
   },
   devServer: {
     contentBase: './',
-    publicPath: 'http://localhost:8080/built/'
+    publicPath: 'http://localhost:8080/built/',
+    
   },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.json$/, loader: "json-loader"}
     ]
   },
   node: {
@@ -35,6 +38,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
+    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
+    new DashboardPlugin({port: 8080})
   ]
 }

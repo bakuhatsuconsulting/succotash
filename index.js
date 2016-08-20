@@ -6,10 +6,7 @@
  * @description
  */
 const {app, BrowserWindow} = require('electron');
-app.harvest = require('harvest');
-console.log(app)
-// var remote = require('electron').remote;
-// var electronFs = remote.require('fs');
+
 
 let win;
 

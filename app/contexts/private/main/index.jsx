@@ -5,20 +5,17 @@
  ***********************************************************************************************************************************************
  * @description
  */
+
 import React from 'react';
 
-export default class Content extends React.Component {
-  constructor(props) {
+export default class Main extends React.Component {
+  constructor() {
     super();
-    
-    this.state = {content: props.children};
+
+    this.state = {};
   }
 
   render() {
-    return (
-      <div className="col-xs-12 content">
-        {this.state.content}
-      </div>
-    )
+    return (<div>WE HAS A PRIVATE</div>);
   }
 }

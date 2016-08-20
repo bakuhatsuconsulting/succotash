@@ -7,33 +7,18 @@
  */
 import Electron from 'electron';
 import q from 'q';
+let oAuth = require('scripts/oAuth');
 
-let remote = Electron.remote;
-// let Harvest = remote.require('harvest');
-let oAuth = remote.require('electron-oAuth2');
-let harvest;
-let code;
-let token;
+export default {login}
 
-/**
- * 
- */
-export default {authenticate};
-
-/**
- * [authenticate description]
- * @param  {[type]} creds [description]
- * @return {[type]}       [description]
- */
-function authenticate(creds) {
-  let def = q.defer();
+function login(creds) {
   let config = {
     clientId: creds.identifier,
     clientSecret: creds.secret,
     authorizationUrl: 'https://'+creds.subdomain+'.harvestapp.com/oauth2/authorize',
     tokenUrl: 'https://'+creds.subdomain+'.harvestapp.com/oauth2/token',
     useBasicAuthorizationHeader: false,
-    redirectUri: 'http://localhost'
+    redirectUri: 'http://localhost/callback'
   };
 
   let win = {
@@ -46,10 +31,9 @@ function authenticate(creds) {
 
   harvest = oAuth(config, win);
 
-  harvest.getAccessToken()
+  return harvest.getAccessToken()
     .then(function(data) {
       console.log(data);
     });
 
-  return def.promise;
 }

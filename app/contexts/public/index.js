@@ -5,20 +5,10 @@
  ***********************************************************************************************************************************************
  * @description
  */
-import React from 'react';
 
-export default class Content extends React.Component {
-  constructor(props) {
-    super();
-    
-    this.state = {content: props.children};
-  }
+import Main from './main/index.jsx';
 
-  render() {
-    return (
-      <div className="col-xs-12 content">
-        {this.state.content}
-      </div>
-    )
-  }
-}
+/**
+ * 
+ */
+export default {Main};

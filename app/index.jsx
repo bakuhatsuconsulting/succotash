@@ -32,7 +32,7 @@ export default class Succotash extends React.Component {
 
   componentWillMount() {
     Events.publish('header', <Headers />);
-    Events.publish('content', <Contexts.Main />)
+    Events.publish('content', <Contexts.Public.Main />)
   }
 
   render() {
@@ -65,7 +65,6 @@ function RenderHeader(msg, data) {
 function RenderContent(msg, data) {
   var self = this;
 
-  console.log(data)
   this.setState({rendering: true}, function() {
     self.setState({content: data, rendering: false});
   });

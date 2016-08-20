@@ -5,9 +5,10 @@
  ***********************************************************************************************************************************************
  * @description
  */
-import Main from './main/index.jsx';
+import Public from './public';
+import Private from './private';
 
 /**
  * 
  */
-export default {Main}
+export default {Public, Private};

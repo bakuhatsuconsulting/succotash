@@ -5,20 +5,14 @@
  ***********************************************************************************************************************************************
  * @description
  */
-import React from 'react';
+import _ from 'lodash';
 
-export default class Content extends React.Component {
-  constructor(props) {
-    super();
-    
-    this.state = {content: props.children};
-  }
+let Identity = {};
 
-  render() {
-    return (
-      <div className="col-xs-12 content">
-        {this.state.content}
-      </div>
-    )
-  }
+export function get() {
+  return Identity;
+}
+
+export function set(data) {
+  return _.merge(Identity, (data || {}));
 }

@@ -27,10 +27,19 @@ try {
  */
 export default {get, set};
 
+/**
+ * [get description]
+ * @param  {[type]} name [description]
+ * @return {[type]}      [description]
+ */
 function get(name) {
   return name && settings[name] || !name && _.merge({}, settings); 
 }
 
+/**
+ * [set description]
+ * @param {[type]} data [description]
+ */
 function set(data) {
   let def = q.defer();
 

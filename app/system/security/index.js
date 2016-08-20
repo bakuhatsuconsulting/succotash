@@ -23,6 +23,5 @@ export function encrypt(data) {
  * @return {[type]}      [description]
  */
 export function decrypt(token) {
-  console.log(token)
   return token && jwt.verify(token, secret) || null;
 }

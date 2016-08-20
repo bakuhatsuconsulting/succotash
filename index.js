@@ -5,8 +5,7 @@
  ***********************************************************************************************************************************************
  * @description
  */
-const {app, BrowserWindow} = require('electron');
-
+const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 
 let win;
 
@@ -28,5 +27,13 @@ function createWindow() {
     win = null;
   });
 }
+
+ipcMain.on('open-file-dialog', function(e) {
+  dialog.showOpenDialog({
+    properties: ['openFile', 'openDirectory']
+  }, function(files) {
+    if(files) {e.sender.send('selected-directory', files)}
+  });
+});
 
 

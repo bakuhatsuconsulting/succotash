@@ -14,6 +14,7 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   font-size: 62.5%;
+  min-width: 230px;
 }
 
 body #content {
@@ -21,6 +22,7 @@ body #content {
   height: 100%;
   width: 100%;
   font-size: 1.2rem;
+  min-width: 230px;
 }
 
 body #content .content {
@@ -79,6 +81,11 @@ body #content .content {
   top: 25%;
 }
 
+.gutterless {
+  margin:0;
+  padding: 0;
+}
+
 .margin-top__large {
   margin-top: 20px;
 }
@@ -89,4 +96,49 @@ body #content .content {
 
 .margin-top__small {
   margin-top: 5px;
+}
+
+.pointy {
+  cursor: pointer;
+}
+
+.projects {
+  margin-top: 20px;
+}
+
+hr {
+  color: #fff;
+}
+
+.projects-header h3, .projects-header button {
+  margin-bottom: 0;
+  vertical-align: bottom;
+}
+.projects-header h3 {
+  margin-top: 7px;
+}
+
+.projects-header div {
+  vertical-align: bottom;
+}
+
+.projects-header {
+  border-bottom: 1px solid #fff;
+  padding-bottom: 10px;
+}
+
+.project {
+  border: 1px solid #333;
+  height: 110px;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+}
+
+.add-project h4 {
+  margin: 0;
+}
+
+.add-project i {
+
 }

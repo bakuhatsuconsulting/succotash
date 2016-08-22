@@ -15,7 +15,7 @@ app.on('window-all-closed', () => {
 });
 
 function createWindow() {
-  win = new BrowserWindow({width: 800, height: 620});
+  win = new BrowserWindow({width: 800, height: 620, title: 'Shit...'});
 
   win.loadURL('file://'+__dirname+'/index.html', {
     nodeIntegration: true

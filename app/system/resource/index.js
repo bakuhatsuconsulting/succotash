@@ -6,51 +6,54 @@
  * @description
  */
 import Electron from 'electron';
+import * as Security from '../security';
+import Settings from '../settings';
 import q from 'q';
 
 let request = Electron.remote.require('superagent');
+let settings = Security.decrypt(Settings.get('user'));
 
 export default class Resource {
-  constructor(settings) {
-    this.base = settings.url;
-    this.resource = settings.name;
+  constructor(name, opts) {
+    this.base = settings.api;
+    this.resource = name;
     this.url = this.base + '/' + this.resource;
-    this.headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Basic '+ settings.authorization};
+    this.headers = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Basic '+ btoa(settings.email+':'+settings.password)};
   }
 
-  get(path) {
+  get(segments) {
     var def = q.defer();
 
-    configure(request.get(this.url + (this.path || '')), this.headers)
+    configure(request.get(buildURL(this.url, segments)), this.headers)
       .end(response(def));
 
     return def.promise;
   }
 
-  put(path, data) {
+  put(segments, data) {
     var def = q.defer();
 
-    configure(request.put(this.url + (this.path || '')), this.headers)
+    configure(request.put(buildURL(this.url, segments)), this.headers)
       .send(data)
       .end(response(def));
 
     return def.promise;
   }
 
-  post(path, data) {
+  post(segments, data) {
     var def = q.defer();
 
-    configure(request.post(this.url + (this.path || '')), this.headers)
+    configure(request.post(buildURL(this.url, segments)), this.headers)
       .send(data)
       .end(response(def));
 
     return def.promise;
   }
 
-  delete(path) {
+  delete(segments) {
     var def = q.defer();
 
-    configure(request.delete(this.url + (this.path || '')), this.headers)
+    configure(request.delete(buildURL(this.url, segments)), this.headers)
       .end(response(def));
 
     return def.promise;
@@ -74,4 +77,15 @@ function configure(req, headers) {
   }
 
   return req;
+}
+
+function buildURL(url, segments) {
+  segments = segments || {};
+
+  Object.keys(segments)
+    .forEach(function(segment) {
+      url = url.replace(':'+segment, segments[segment]);
+    });
+
+  return url;
 }

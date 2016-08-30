@@ -10,7 +10,7 @@ import Resource from '../../resource';
 
 export default class Basic {
   constructor(settings) {
-    this.test = new Resource('account/who_am_i');
+    this.test = new Resource('account/who_am_i', {settings: settings});
     return this;
   }
 

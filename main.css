@@ -44,6 +44,14 @@ body #content .content {
   text-align: center;
 }
 
+.center-y {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  position: relative;
+}
+
 .center {
   text-align: center;
 }
@@ -104,6 +112,7 @@ body #content .content {
 
 .projects {
   margin-top: 20px;
+  position: relative;
 }
 
 hr {
@@ -133,6 +142,16 @@ hr {
   border-radius: 4px;
   background-color: #fff;
   color: #333;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.project h4 {
+  word-wrap: break-word;
+  cursor: pointer;
+  margin:0;
+  padding:0;
 }
 
 .add-project h4 {

@@ -28,11 +28,13 @@ function createWindow() {
   });
 }
 
-ipcMain.on('open-file-dialog', function(e) {
+ipcMain.on('open-file-dialog', function(e, data) {
+  data = data || 'selected-directory';
+
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
+    properties: ['openFile', 'openDirectory'] 
   }, function(files) {
-    if(files) {e.sender.send('selected-directory', files)}
+    if(files) {e.sender.send(data, files); }
   });
 });
 

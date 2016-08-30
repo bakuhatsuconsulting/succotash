@@ -9,12 +9,17 @@
 import React from 'react';
 import Settings from '../../../system/settings';
 import Projects from './projects/index.jsx';
+import Domain from '../../../domains/projects';
 
 export default class Main extends React.Component {
   constructor() {
     super();
 
-    this.state = {projects: Settings.get('projects') || []};
+    this.state = {projects: Domain.local.get(), tasks: []};
+  }
+
+  componentWillMount() {
+
   }
 
   render() {

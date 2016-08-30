@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
-var DashboardPlugin = require('webpack-dashboard/plugin');
 
 module.exports = {
     entry: {
@@ -12,6 +11,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: 'http://localhost:8080/built/'
   },
+  devtool: 'source-map',
   devServer: {
     contentBase: './',
     publicPath: 'http://localhost:8080/built/',
@@ -38,7 +38,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
-    new DashboardPlugin({port: 8080})
+    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
   ]
 }

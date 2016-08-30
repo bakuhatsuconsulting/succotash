@@ -13,7 +13,7 @@ import * as Security from '../../../system/security';
 import * as Identity from '../../../system/identity';
 import Auth from '../../../system/auth';
 import Events from 'pubsub-js';
-import Private from '../../private';
+// import Private from '../../private';
 
 /**
  * 
@@ -42,22 +42,24 @@ export default class Main extends React.Component {
   }
 
   login() {
+    let self = this;
     this.setState({initialized: false});
     
     new Auth(this.state.settings).login()
       .then(Identity.set)
       .then(this.save(this.state.settings))
       .then(this.success)
-      .catch(this.error)
+      .catch(this.error.bind(self))
       .done();
   }
 
   success(data) {
+    let Private = require('../../private');
     Events.publish('content', <Private.Main />);
   }
 
   error(err) {
-    this.setState({error: error});
+    this.setState({error: err});
   }
 
   save(settings) {

@@ -43,13 +43,17 @@ function get(name) {
 function set(data) {
   let def = q.defer();
 
-  fs.writeFile(file, JSON.stringify(_.merge(settings, (data || {}))), {encoding: 'UTF-8'}, function(err) {
-    if(err) {
-      def.reject(err);
-    } else {
-      def.resolve(settings);
-    }
-  });
+  if(!data || data && data.constructor !== Object) {
+    def.reject('You must pass in an object');
+  } else {
+    fs.writeFile(file, JSON.stringify(_.merge(settings, (data || {}))), {encoding: 'UTF-8'}, function(err) {
+      if(err) {
+        def.reject(err);
+      } else {
+        def.resolve(settings);
+      }
+    });
+  }
 
   return def.promise;
 }

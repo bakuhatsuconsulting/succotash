@@ -11,10 +11,13 @@ import Settings from '../settings';
 import q from 'q';
 
 let request = Electron.remote.require('superagent');
-let settings = Security.decrypt(Settings.get('user'));
 
 export default class Resource {
   constructor(name, opts) {
+    opts = opts || {};
+
+    let settings = opts.settings || Security.decrypt(Settings.get('user')) || {};
+    
     this.base = settings.api;
     this.resource = name;
     this.url = this.base + '/' + this.resource;

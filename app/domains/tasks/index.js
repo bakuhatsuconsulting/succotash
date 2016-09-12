@@ -11,7 +11,6 @@ import Resource from '../../system/resource';
 import q from 'q';
 
 let user = Security.decrypt(Settings.get('user'));
-
 let Tasks = new Resource('tasks');
     
 // let Projects = new Resource({})

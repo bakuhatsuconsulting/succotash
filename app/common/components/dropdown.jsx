@@ -16,7 +16,7 @@ export default class Dropdown extends React.Component {
     super();
     
     this.props = props || {};
-    this.state = {selected: undefined};
+    this.state = {selected: undefined, disabled: props.disabled};
   }
 
   select(e) {
@@ -30,6 +30,16 @@ export default class Dropdown extends React.Component {
     if(this.props.selected) {
       this.state.selected = this.getSelected();
     }
+  }
+
+  checkDisabled() {
+    var disabled = this.state.disabled || false;
+
+    if(disabled && disabled.constructor === Function) {
+      disabled = disabled();
+    }
+
+    return disabled;
   }
 
   getSelected() {
@@ -59,10 +69,10 @@ export default class Dropdown extends React.Component {
         rows.unshift(<Option {...this.props} key={0} data={{name: ""}} />);
       }
 
-      dom = ( <select ref="dd" className="form-control" name={this.props.name || 'SYP-dropdown-'+Date.now()} onChange={this.select.bind(this)}>{rows}</select>);
+      dom = ( <select ref="dd" className="form-control" disabled={(this.checkDisabled.bind(this))()} name={this.props.name || 'SYP-dropdown-'+Date.now()} onChange={this.select.bind(this)}>{rows}</select>);
 
       if(this.props.selected && this.state.selected) {
-        dom = ( <select ref="dd" value={this.state.selected} className="form-control" name={this.props.name || 'SYP-dropdown-'+Date.now()} onChange={this.select.bind(this)}>{rows}</select>);
+        dom = ( <select ref="dd" value={this.state.selected} disabled={(this.checkDisabled.bind(this))()} className="form-control" name={this.props.name || 'SYP-dropdown-'+Date.now()} onChange={this.select.bind(this)}>{rows}</select>);
       }
 
     } catch(err) {

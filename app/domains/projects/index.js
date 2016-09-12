@@ -9,12 +9,15 @@ import * as Security from '../../system/security';
 import Settings from '../../system/settings';
 import Resource from '../../system/resource';
 import q from 'q';
+import moment from 'moment';
+import _ from 'lodash';
 
-let user = Security.decrypt(Settings.get('user'));
+const User = Security.decrypt(Settings.get('user'));
 
 let Projects = new Resource('projects');
     Projects.find = new Resource('projects/:id');
     Projects.tasks = new Resource('projects/:id/task_assignments');
+    Projects.entries = new Resource('projects/:id/entries?from=19700101&to=' + moment().format('YYYYMMDD'));
 
 // let Projects = new Resource({})
 let API = {
@@ -24,7 +27,11 @@ let API = {
     get: getTasksForProject},
   local: {
     get: getLocalProjects,
-    save: saveLocalProjects
+    save: saveLocalProjects,
+    remove: removeLocalProject
+  },
+  entries: {
+    get: getProjectEntries
   }
 }; 
 
@@ -54,12 +61,25 @@ function getProjectById(id) {
 }
 
 /**
+ * [getProjectEntries description]
+ * @param  {[type]} id [description]
+ * @return {[type]}    [description]
+ */
+function getProjectEntries(id) {
+  return Projects.entries.get({id: id})
+    .then(function(entries) {
+      return entries.map(function(e) { return e.day_entry});
+    }, function(err) {
+      console.log(err)
+    });
+}
+
+/**
  * [getProjectTasks description]
  * @param  {[type]} id [description]
  * @return {[type]}    [description]
  */
 function getTasksForProject(id, all) {
-  console.log(id, all)
   return Projects.tasks.get({id: id})
     .then(function(tasks) {
       return tasks.map(function(t) {
@@ -83,12 +103,35 @@ function saveLocalProjects(data) {
  * @return {[type]} [description]
  */
 function getLocalProjects() {
+
   return (Settings.get('projects') || [])
+    .filter(function(p) {return p.domain === User.domain})
     .map(function(p) {
       p['harvest.project'] = parseInt(p['harvest.project']);
       p['harvest.project.task'] = parseInt(p['harvest.project.task']);
       return p;
     });
+}
+
+/**
+ * [removeLocalProject description]
+ * @param  {[type]} project [description]
+ * @return {[type]}         [description]
+ */
+function removeLocalProject(project) {
+  var def = q.defer();
+
+  var projects = Settings.get('projects');
+
+  _.remove(projects, function(n) {
+    return n.id === project.id;
+  });
+
+  Settings.set({projects: projects});
+
+  def.resolve(projects);
+
+  return def.promise;
 }
 
 /**

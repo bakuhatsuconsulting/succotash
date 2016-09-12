@@ -7,6 +7,14 @@
  */
 import electron from 'electron'
 import React from 'react';
-import Succotash from 'app/index.jsx';
+import Settings from 'app/system/settings';
 
-React.render(<Succotash />, document.getElementById('content'));
+/**
+ * 
+ */
+Settings.init()
+  .then(function(settings) {
+    return require('app/index.jsx');;
+  }).then(function(Succotash) {
+    React.render(<Succotash />, document.getElementById('content'));
+  });

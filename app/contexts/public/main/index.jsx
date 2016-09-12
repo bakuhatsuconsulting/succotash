@@ -13,7 +13,7 @@ import * as Security from '../../../system/security';
 import * as Identity from '../../../system/identity';
 import Auth from '../../../system/auth';
 import Events from 'pubsub-js';
-// import Private from '../../private';
+import Contexts from '../../../contexts';
 
 /**
  * 
@@ -43,23 +43,24 @@ export default class Main extends React.Component {
 
   login() {
     let self = this;
-    this.setState({initialized: false});
+    this.setState({initialized: false, error: null});
     
     new Auth(this.state.settings).login()
       .then(Identity.set)
       .then(this.save(this.state.settings))
-      .then(this.success)
+      .then(this.success.bind(self))
       .catch(this.error.bind(self))
       .done();
   }
 
   success(data) {
-    let Private = require('../../private');
-    Events.publish('content', <Private.Main />);
+    let Main = Contexts.Private().Main;
+
+    Events.publish('content', <Main />);
   }
 
   error(err) {
-    this.setState({error: err});
+    this.setState({error: err, initialized: true});
   }
 
   save(settings) {
@@ -88,7 +89,7 @@ export default class Main extends React.Component {
                     <form className="form">
                       <div className="form-row">
                         <label className="" for="subdomain">Harvest Domain:</label>
-                        <input type="text" className="form-control" id="subdomain" defaultValue={self.state.settings.domain}  placeholder="foo.harvestapp.com" name="domain" onChange={self.update.bind(self)} />
+                        <input type="text" className="form-control" id="subdomain" defaultValue={self.state.settings.domain}  placeholder="<domain>.harvestapp.com" name="domain" onChange={self.update.bind(self)} />
                       </div>
                       <div className="form-row">
                         <label className="" for="identifier">Email:</label>
@@ -96,7 +97,7 @@ export default class Main extends React.Component {
                       </div>
                       <div className="form-row">
                         <label className="" for="secret">Password</label>
-                        <input type="password" className="form-control" id="secret" defaultValue={self.state.settings.password} placeholder="Password" name="password" onChange={self.update.bind(self)} />
+                        <input type="password" className="form-control" id="secret" defaultValue={self.state.settings.password} placeholder="You may need to create a password in your account settings if you typically log in with Google, etc." name="password" onChange={self.update.bind(self)} />
                       </div>  
                     </form>
                   )
@@ -120,12 +121,22 @@ export default class Main extends React.Component {
                 )
               })()}
             <div className="center">
+
+              {
+                (function() {
+                  if(self.state.error) {
+                    return <p className="error">{self.state.error}</p>
+                  }
+                })()
+              }
               <div>
                 <button onClick={this.login.bind(this)} className="btn btn-default">Log In</button>
               </div>
-              <div className="margin-top__large">
-                <a onClick={function() {self.setState({basic: !self.state.basic})}}>{!this.state.basic? 'Login with username and password.' : 'Log In with oAuth'}</a>
-              </div>
+                <div className="margin-top__large">
+                  {
+                    //  <a onClick={function() {self.setState({basic: !self.state.basic})}}>{!this.state.basic? 'Login with username and password.' : 'Log In with oAuth'}</a>
+                  }
+                </div>
             </div>
           </div>
         </div>

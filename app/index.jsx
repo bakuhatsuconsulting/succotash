@@ -13,13 +13,8 @@ import Content from './common/components/layout/content/index.jsx';
 import Contexts from './contexts';
 import Events from 'pubsub-js';
 import Loader from './common/components/loader.jsx';
+import Watch from './system/watch';
 
-// import fs from 'fs';
-
-// var remote = electron.remote;
-// var fs = remote.require('fs');
-// var Harvest = remote.require('harvest');
-// var config = require('./config');
 
 export default class Succotash extends React.Component {
   constructor() {
@@ -28,21 +23,29 @@ export default class Succotash extends React.Component {
     this.state = {header: undefined, content: <Loader/>, rendering: false};
     Events.subscribe('content', RenderContent.bind(this));
     Events.subscribe('header', RenderHeader.bind(this));
+    
+    electron.remote.Menu.setApplicationMenu(electron.remote.Menu.buildFromTemplate([]));
+
+    window.onbeforeunload = function(e) {
+      Watch.clear();
+    }
   }
 
   componentWillMount() {
-    Events.publish('header', <Headers />);
-    Events.publish('content', <Contexts.Public.Main />)
+    let Main = Contexts.Public().Main;
+
+    Events.publish('content', <Main />)
   }
 
   render() {
 
-
     let dom =  (
       <div className="row content">
-        {this.state.header}
+        <Headers name={this.state.header}/>
         <Content>
-          {this.state.content}
+          {
+            this.state.content
+          }
         </Content>
       </div>
     )

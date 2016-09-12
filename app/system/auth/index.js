@@ -7,6 +7,7 @@
  */
 
 import Electron from 'electron';
+import Settings from '../settings';
 import q from 'q';
 
 let INSTANCE;
@@ -39,6 +40,6 @@ export default class Auth {
   }
 }
 
-export function logout() {
-  
+export function logout(win) {
+  return Settings.set({user: null});
 }

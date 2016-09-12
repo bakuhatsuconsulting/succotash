@@ -25,6 +25,8 @@
     "css-loader": "^0.15.1",
     "electron-packager": "^4.1.3",
     "electron-rebuild": "^0.2.2",
+    "electron-windows-installer": "^1.4.4",
+    "gulp": "^3.9.1",
     "node-libs-browser": "^0.5.2",
     "style-loader": "^0.12.3",
     "webpack": "^1.9.12",
@@ -38,10 +40,12 @@
     "json-loader": "^0.5.4",
     "jsonwebtoken": "^7.1.9",
     "lodash": "^4.15.0",
+    "moment": "^2.14.1",
     "pubsub-js": "^1.5.3",
     "q": "^1.4.1",
     "react": "^0.13.3",
     "superagent": "^2.2.0",
-    "superagent-promise": "^1.1.0"
+    "superagent-promise": "^1.1.0",
+    "watch": "^0.19.2"
   }
 }

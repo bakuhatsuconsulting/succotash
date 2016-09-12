@@ -11,6 +11,8 @@ import Loader from '../../../../common/components/loader.jsx';
 import Project from './project';
 import Domain from '../../../../domains/projects';
 import Tasks from '../../../../domains/tasks';
+import Settings from '../../../../system/settings';
+import * as Security from '../../../../system/security';
 import Events from 'pubsub-js';
 
 let ipc = Electron.ipcRenderer;
@@ -22,14 +24,18 @@ export default class Projects extends React.Component {
     var self = this;
 
     this.state = {projects: props.data || [], available: []};
+    this.user = Security.decrypt(Settings.get('user'));
 
     ipc.on('selected-directory', function(e, path) {
       self.add(path);
     });
 
     Events.subscribe('Project:Updated', function(e, project) {
-      console.log(self.state)
       self.save();
+    });
+
+    Events.subscribe('Project:removed', function(e, project) {
+      self.remove(project);
     });
   }
 
@@ -43,7 +49,7 @@ export default class Projects extends React.Component {
         .then(function(tasks) {
           self.setState({tasks: tasks, initialized: true})
         }).catch(function(err) {
-        console.log(err);
+        self.setState({error: 'There was an error retrieving your Harvest data. You may not have premission to access these resources. Talk to your Harvest administrator.', initialized: true});
       }).done();
   }
 
@@ -58,15 +64,24 @@ export default class Projects extends React.Component {
 
     if(!path) { return; }
 
-    var projects = [{id: Math.random().toString(32).substr(2, 16), path: path}].concat(this.state.projects);
+    this.state.projects.unshift({id: Date.now(), path: path, domain: this.user.domain});
 
-    this.setState({projects: projects}, function() {
+    this.setState({projects: this.state.projects}, function() {
       self.save();
     });
   }
 
   save() {
     Domain.local.save(this.state.projects);
+  }
+
+  remove(project) {
+    var self = this;
+
+    Domain.local.remove(project)
+      .then(function(projects) {
+        self.setState({projects: projects});
+      });
   }
 
   render() {
@@ -85,15 +100,23 @@ export default class Projects extends React.Component {
             <h3>Projects</h3>
           </div>
           <div className="col-xs-3 right gutterless">
-            <button className="btn btn-default" onClick={this.choose.bind(this)}>Add a project <i className="glyphicon glyphicon-plus-sign pointy"></i></button>
+            <button className="btn btn-default" disabled={this.state.error} onClick={this.choose.bind(this)}>Add a project <i className="glyphicon glyphicon-plus-sign pointy"></i></button>
           </div>
         </div>
         {
-          this.state.projects.map(function(project, idx) {
-            return (
-              <Project data={{project: project, projects: self.state.available, tasks: self.state.tasks}} key={project.path} />
-            )
-          })
+          (function() {
+            if(self.state.error) {
+              return <p className="col-xs-12 center margin-top__large">{self.state.error}</p>
+            } else {
+              return (
+                self.state.projects.map(function(project, idx) {
+                  return (
+                    <Project data={{project: project, projects: self.state.available, tasks: self.state.tasks}} key={project.path} />
+                  )
+                })
+              )
+            }
+          })()
         }
       </div>
     )    

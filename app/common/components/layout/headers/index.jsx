@@ -18,7 +18,7 @@ export default class Header extends React.Component {
   }
 
   render() {
-    let dom;
+    let dom = <div>FOO</div>;
 
     try {
       dom = require(this.state.header)(this);

@@ -5,10 +5,11 @@
  ***********************************************************************************************************************************************
  * @description
  */
-import Public from './public';
-import Private from './private';
 
 /**
- * 
+ *  
  */
-export default {Public, Private};
+export default {
+  Public: function() { return require('./public'); },
+  Private: function() { return require('./private'); }
+};

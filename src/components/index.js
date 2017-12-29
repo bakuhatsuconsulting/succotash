@@ -1,22 +1,18 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * SUCCOTASH - PUBLIC - LOGIN
+ * BLINK BUDGET - COMPONENTS
  ***********************************************************************************************************************************************
  * @description
  */
-import React from 'react';
-import Components from '~/src/components';
+import Site from './site';
 
 /**
- *
+ * Named Exports
  */
-export default class Login extends React.Component {
-  render() {
-    return (
-      <Components.Site.Body>
-        <Components.Site.Header />
-      </Components.Site.Body>
-    )
-  }
-}
+export {Site};
+
+/**
+ * Default Export
+ */
+export default {Site};

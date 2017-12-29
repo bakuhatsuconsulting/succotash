@@ -13,7 +13,7 @@ import _ from 'lodash';
 let remote = Electron.remote;
 let fs = remote.require('fs');
 let path = remote.require('path');
-let file = path.join((process.env[Constants.HOME_DIR[process.platform] || Constants.HOME_DIR.default], Constants.SETTINGS_FILE);
+let file = path.join(process.env[Constants.HOME_DIR[process.platform] || Constants.HOME_DIR.default], Constants.SETTINGS_FILE);
 
 /**
  * [settings description]
@@ -55,7 +55,7 @@ function init() {
  * @return {[type]}      [description]
  */
 function get(name) {
-  return name && settings[name] || !name && _.merge({}, settings);
+  return name? settings[name] : Object.assign({}, settings);
 }
 
 /**

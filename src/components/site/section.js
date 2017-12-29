@@ -1,22 +1,23 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * SUCCOTASH - PUBLIC - LOGIN
+ * COMPONENTS - SITE - SECTION
  ***********************************************************************************************************************************************
  * @description
  */
 import React from 'react';
-import Components from '~/src/components';
+import Layout from '@continuum/react-bulma';
 
 /**
  *
  */
-export default class Login extends React.Component {
+export default class Section extends React.Component {
+
   render() {
     return (
-      <Components.Site.Body>
-        <Components.Site.Header />
-      </Components.Site.Body>
+      <Layout.Container classes={`site-section ${this.props.classes}`}>
+        {this.props.children}
+      </Layout.Container>
     )
   }
 }

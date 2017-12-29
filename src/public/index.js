@@ -8,6 +8,8 @@
 
 import View from '~/src/system/view';
 import Router from '~/src/system/router';
+import Settings from '~/src/system/settings';
+import '~/src/assets/styles/main.css';
 
 //
 // VIEWS
@@ -18,6 +20,7 @@ import Router from '~/src/system/router';
 import main from './main';
 import login from './login';
 
+
 /**
  *
  */
@@ -27,6 +30,13 @@ const views = [
 ];
 
 /**
- * Init Router
+ * [router description]
+ * @type {Router}
  */
-new Router().register(views).start('#/');
+const router = new Router();
+
+/**
+ * Init App
+ */
+Settings.init().then(() => {router.register(views).start('#/').set('/')})
+  .catch(e => console.log(e));

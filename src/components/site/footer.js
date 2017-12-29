@@ -1,21 +1,23 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- *
+ * COMPONENTS - SITE - FOOTER
  ***********************************************************************************************************************************************
  * @description
  */
-import electron from 'electron'
 import React from 'react';
-import Dom from 'react-dom';
-import Settings from '~/app/system/settings';
-// import Succotash from '~/app';
-import '~/main.css';
+import Layout from '@continuum/react-bulma';
 
 /**
- * Init App
+ *
  */
-Settings.init()
-  .then(settings => {
-    console.log('settings', settings)
-  });
+export default class Footer extends React.Component {
+
+  render() {
+    return (
+      <Layout.Container classes={`site-footer ${this.props.classes}`}>
+        {this.props.children}
+      </Layout.Container>
+    )
+  }
+}

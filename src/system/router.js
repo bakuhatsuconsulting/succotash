@@ -6,7 +6,8 @@
  * @description
  */
 import Continuum from '@continuum/continuum';
-// import Identity from './identity';
+import Identity from './identity';
+import Constants from './constants';
 // import Access from './access';
 
 /**
@@ -24,7 +25,15 @@ export default class Router extends Continuum.Router {
    * @return {[type]}        [description]
    */
   protect(view, router) {
-    console.log('router.protect', view, router);
+    return new Promise((resolve, reject) => {
+      let identity = Identity.get();
+
+      if(identity) {
+        resolve();
+      } else {
+        router.setRoute(Constants.ROUTING.NO_AUTH);
+      }
+    });
   }
 
   /**

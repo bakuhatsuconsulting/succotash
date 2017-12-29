@@ -1,22 +1,28 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * SUCCOTASH - PUBLIC - LOGIN
+ * SUCCOTASH - SYSTEM - IDENTITY
  ***********************************************************************************************************************************************
  * @description
  */
-import React from 'react';
-import Components from '~/src/components';
+import {Security} from '@continuum/continuum';
+import Settings from './settings';
 
 /**
- *
+
+ * @return {[type]} [description]
  */
-export default class Login extends React.Component {
-  render() {
-    return (
-      <Components.Site.Body>
-        <Components.Site.Header />
-      </Components.Site.Body>
-    )
+export function get() {
+  let token = Settings.get('user');
+  let user;
+
+  try {
+    user = Security.decrypt(token);
+  } catch(e) {
+    // bad token
   }
+
+  return user;
 }
+
+export default {get}

@@ -19,9 +19,17 @@ module.exports = {
       { test: /\.js$/, loader: 'babel-loader'},
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.json$/, loader: "json-loader"},
-      { test: /\.(png|jpg|gif)$/, loader: 'file-loader', options: {name: '[path][name].[ext]'}},
-      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' , options: {name: '[path][name].[ext]'}},
-      { test: /\.(eot|ttf|svg)$/, loader: 'file-loader', options: {name: '[path][name].[ext]'} }
+      { test: /\.(png|jpg|gif)$/, loader: 'file-loader'},
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
+      { test: /\.(eot|ttf|svg)$/, loader: 'file-loader' },
+      { test: /\.(scss|sass)?$/, use: [{
+             loader: "style-loader" // creates style nodes from JS strings
+         }, {
+             loader: "css-loader" // translates CSS into CommonJS
+         }, {
+             loader: "sass-loader" // compiles Sass to CSS
+         }]
+       }
     ]
   },
   node: {
@@ -37,9 +45,9 @@ module.exports = {
   plugins: [
     new html({template: path.join(__dirname, 'src', 'index.html')}),
     new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
-    new copy([
-      {from: path.join(__dirname, 'images'), to: path.join(__dirname, 'dist')},
-      {from: path.join(__dirname, 'fonts'), to: path.join(__dirname, 'dist')}
-    ])
+    // new copy([
+    //   {from: path.join(__dirname, 'src', 'assets', 'images', '**', '*'), to: 'assets'},
+    //   {from: path.join(__dirname, 'src', 'assets', '**', '*'), to: 'assets'},
+    // ])
   ]
 }

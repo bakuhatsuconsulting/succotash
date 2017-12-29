@@ -1,5 +1,5 @@
-@import url("styles/bootstrap.css");
-@import url("styles/bootstrap-theme.css");
+@import url("./bootstrap.css");
+@import url("./bootstrap-theme.css");
 
 body {
   background-color: #f36c00;

@@ -1,15 +1,17 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * APPLICATION CONTEXTS
+ * SUCCOTASH - PUBLIC - MAIN
  ***********************************************************************************************************************************************
  * @description
  */
+import React from 'react';
 
 /**
  *
  */
-export default {
-  Public: function() { return require('./public'); },
-  Private: function() { return require('./private'); }
-};
+export default class Main extends React.Component {
+  render() {
+    return <h1>Home</h1>
+  }
+}

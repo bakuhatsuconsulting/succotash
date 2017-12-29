@@ -28,7 +28,7 @@ body #content {
 body #content .content {
   position: relative;
   height: calc(100% - 55px);
-  width: 100%; 
+  width: 100%;
 }
 
 .absolute-center {
@@ -40,7 +40,7 @@ body #content .content {
   left: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   text-align: center;
 }
 

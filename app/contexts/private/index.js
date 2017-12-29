@@ -1,16 +1,16 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
 
 import Main from './main';
-import Settings from './settings/index.jsx';
+import Settings from './settings/index';
 import Events from 'pubsub-js';
 import Electron from 'electron';
-import * as Auth from '../../system/auth';
+import * as Auth from '~/app/system/auth';
 import React from 'react';
 
 let Menu = Electron.remote.Menu;
@@ -24,7 +24,7 @@ menu.append(new MenuItem({label: 'Log Out', click: logout}));
 Menu.setApplicationMenu(menu);
 
 /**
- * 
+ *
  */
 export default {Main, Settings};
 

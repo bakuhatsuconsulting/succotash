@@ -1,7 +1,7 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
@@ -25,7 +25,7 @@ app.on('will-quit', function() {
 function createWindow() {
   win = new BrowserWindow({width: 690, height: 620, title: 'Shit...', icon: icon});
 
-  win.loadURL('file://'+__dirname+'/index.html', {
+  win.loadURL(`file://${path.join(__dirname, 'dist', 'index.html')}`, {
     nodeIntegration: true
   });
 
@@ -62,7 +62,7 @@ ipcMain.on('open-file-dialog', function(e, data) {
   data = data || 'selected-directory';
 
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory'] 
+    properties: ['openFile', 'openDirectory']
   }, function(files) {
     if(files) {e.sender.send(data, files); }
   });

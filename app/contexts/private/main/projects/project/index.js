@@ -1,26 +1,25 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
 import React from 'react';
-import Dropdown from '../../../../../common/components/dropdown.jsx';
-import Loader from '../../../../../common/components/loader.jsx';
-import Projects from '../../../../../domains/projects';
-import Timers from '../../../../../domains/timers';
-import Watch from '../../../../../system/watch';
+import Dropdown from '~/app/common/components/dropdown';
+import Loader from '~/app/common/components/loader';
+import Projects from '~/app/domains/projects';
+import Timers from '~/app/domains/timers';
+import Watch from '~/app/system/watch';
 import Electron from 'electron';
 import Events from 'pubsub-js';
 import _ from 'lodash';
-import q from 'q';
 import moment from 'moment';
 
 let ipc = Electron.ipcRenderer;
 
 /**
- * 
+ *
  */
 export default class Project extends React.Component {
   constructor(props) {
@@ -65,8 +64,8 @@ export default class Project extends React.Component {
   componentWillMount() {
     var id = this.state.project['harvest.project'];
 
-    if(!id || this.state.initialized) {             
-      return this.setState({initialized: true, timer: {active: false}}); 
+    if(!id || this.state.initialized) {
+      return this.setState({initialized: true, timer: {active: false}});
     }
 
     this.load(id);
@@ -109,19 +108,16 @@ export default class Project extends React.Component {
   }
 
   loadTasks(id) {
-    var self = this;
-    var def = q.defer();
-
-    if(!id) {
-      def.resolve();
-    } else {
-      Projects.tasks.get(id, this.props.data.tasks)
-        .then(function(tasks) {
-          def.resolve(self.setState({tasks: tasks}));
-        });
-    }
-
-    return def.promise;
+    return new Promise((resolve, reject) => {
+      if(!id) {
+        resolve();
+      } else {
+        Projects.tasks.get(id, this.props.data.tasks)
+          .then((tasks) => {
+            resolve(this.setState({tasks: tasks}));
+          });
+      }
+    });
   }
 
   isActive(timer) {
@@ -141,22 +137,19 @@ export default class Project extends React.Component {
   loadEntries(id) {
     var self = this;
 
-    return function() {
-      var def = q.defer();
-
-      if(!self.state.project['harvest.timer.entry']) { def.resolve(self.setState({timer: {active: false}})); }
+    return new Promise((resolve, reject) => {
+      if(!this.state.project['harvest.timer.entry']) { resolve(this.setState({timer: {active: false}})); }
         else {
-          Timers.get(self.state.project['harvest.timer.entry'])
-            .then(function(entry) {
-              entry.active = self.isActive(entry);
-              self.setState({timer: entry});
+          Timers.get(this.state.project['harvest.timer.entry'])
+            .then((entry) => {
+              entry.active = this.isActive(entry);
+              this.setState({timer: entry});
             }, function(err) {
-              
-            }).then(def.resolve);
+              // err
+            }).then(resolve);
         }
 
-      return def.promise;
-    }
+    });
   }
 
   changePath() {
@@ -206,7 +199,7 @@ export default class Project extends React.Component {
 
   render() {
     var self = this;
-    
+
      var dom = (
         <div className="col-xs-12 project margin-top__large">
           <div className="col-xs-6 center-y">
@@ -219,7 +212,7 @@ export default class Project extends React.Component {
                 <div>
                   <div className="col-xs-12">
                     <Dropdown disabled={self.canChangeHarvestInfo.bind(self)} options={self.state.projects} initEmpty value='id' name="harvest.project" display='name' selected={{id: self.state.project['harvest.project']}} onSelect={self.updateProject.bind(self)}/>
-                    
+
                   </div>
                   <div className="col-xs-12 margin-top__large">
                     <Dropdown disabled={self.canChangeHarvestInfo.bind(self)} options={self.state.tasks} initEmpty value='task_id' display='name' name="harvest.project.task" selected={{task_id: self.state.project['harvest.project.task']}} onSelect={self.updateProject.bind(self)}/>
@@ -253,7 +246,7 @@ export default class Project extends React.Component {
                   </div>
                   )
               })()}
-              
+
             </div>
           </div>
         </div>

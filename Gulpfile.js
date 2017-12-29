@@ -1,7 +1,7 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
@@ -13,7 +13,7 @@ gulp.task('build.windows', function(done) {
     appDirectory: './releases/succotash-win32-ia32',
     outputDirectory: './installers/win32',
     arch: 'ia32',
-    authors: 'Bakuhatsu Consulting LLC',
+    authors: 'Continuum Studios',
     exe: 'succotash.exe',
     // setupIcon: './images/harvest-icon.png',
     iconUrl: 'https://blog.agilebits.com/wp-content/uploads/2015/01/Harvest-Icon-1024-Rounded.png'

@@ -1,15 +1,16 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * APPLICATION CONTEXTS
+ * SUCCOTASH - SYSTEM - CONSTANTS
  ***********************************************************************************************************************************************
  * @description
  */
 
-/**
- *
- */
 export default {
-  Public: function() { return require('./public'); },
-  Private: function() { return require('./private'); }
-};
+  HOME_DIR: {
+    win32: 'USERPROFILE',
+    darwin: 'HOME',
+    default: 'HOME'
+  },
+  SETTINGS_FILE: '.succotashrc'
+}

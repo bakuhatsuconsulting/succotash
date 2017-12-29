@@ -4,48 +4,57 @@
   "description": "Automatically bill time to harvest by coding.",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "watch": "./node_modules/.bin/webpack-dev-server",
+    "electron:start": "./node_modules/.bin/electron ./electron.js",
+    "app:build": "./node_modules/.bin/webpack",
+    "app:start": "npm run app:build -- --watch",
     "electron-rebuild": "./node_modules/.bin/electron-rebuild.cmd"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bakuhatsuconsulting/succotash.git"
+    "url": "git+https://github.com/continuum-studios/succotash.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bakuhatsuconsulting/succotash/issues"
+    "url": "https://github.com/continuum-studios/succotash/issues"
   },
-  "homepage": "https://github.com/bakuhatsuconsulting/succotash#readme",
+  "homepage": "https://github.com/continuum-studios/succotash#readme",
   "devDependencies": {
-    "babel": "^5.6.10",
-    "babel-core": "^5.6.11",
-    "babel-loader": "^5.2.2",
-    "css-loader": "^0.15.1",
-    "electron-packager": "^4.1.3",
-    "electron-rebuild": "^0.2.2",
-    "electron-windows-installer": "^1.4.4",
-    "gulp": "^3.9.1",
-    "node-libs-browser": "^0.5.2",
-    "style-loader": "^0.12.3",
-    "webpack": "^1.9.12",
-    "webpack-dev-server": "^1.9.0"
+    "babel-core": "6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "copy-webpack-plugin": "^4.3.1",
+    "css-loader": "0.28.7",
+    "electron": "1.7.10",
+    "electron-packager": "10.1.0",
+    "electron-rebuild": "1.6.0",
+    "electron-windows-installer": "1.7.8",
+    "file-loader": "1.1.6",
+    "gulp": "3.9.1",
+    "html-webpack-plugin": "^2.30.1",
+    "node-libs-browser": "2.1.0",
+    "nodemon": "^1.14.3",
+    "style-loader": "0.19.1",
+    "webpack": "3.10.0",
+    "webpack-dev-server": "2.9.7"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "electron-oauth2": "^2.3.1",
-    "fetch": "^1.1.0",
-    "harvest": "^0.1.5",
-    "json-loader": "^0.5.4",
-    "jsonwebtoken": "^7.1.9",
-    "lodash": "^4.15.0",
-    "moment": "^2.14.1",
-    "pubsub-js": "^1.5.3",
-    "q": "^1.4.1",
-    "react": "^0.13.3",
-    "superagent": "^2.2.0",
-    "superagent-promise": "^1.1.0",
-    "watch": "^0.19.2"
+    "@continuum/continuum": "^2.0.0",
+    "bootstrap": "3.3.7",
+    "electron-oauth2": "2.3.1",
+    "fetch": "1.1.0",
+    "harvest": "0.1.5",
+    "json-loader": "0.5.4",
+    "jsonwebtoken": "7.1.9",
+    "lodash": "4.15.0",
+    "moment": "2.14.1",
+    "pubsub-js": "1.5.8",
+    "q": "^1.5.1",
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "superagent": "3.8.2",
+    "superagent-promise": "1.1.0",
+    "watch": "1.0.2"
   }
 }

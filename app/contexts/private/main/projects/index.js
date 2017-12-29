@@ -1,18 +1,18 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
 import Electron from 'electron';
 import React from 'react';
-import Loader from '../../../../common/components/loader.jsx';
+import Loader from '~/app/common/components/loader';
 import Project from './project';
-import Domain from '../../../../domains/projects';
-import Tasks from '../../../../domains/tasks';
-import Settings from '../../../../system/settings';
-import * as Security from '../../../../system/security';
+import Domain from '~/app/domains/projects';
+import Tasks from '~/app/domains/tasks';
+import Settings from '~/app/system/settings';
+import * as Security from '~/app/system/security';
 import Events from 'pubsub-js';
 
 let ipc = Electron.ipcRenderer;
@@ -119,6 +119,6 @@ export default class Projects extends React.Component {
           })()
         }
       </div>
-    )    
+    )
   }
 }

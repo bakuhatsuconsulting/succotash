@@ -1,14 +1,14 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * 
+ *
  ***********************************************************************************************************************************************
  * @description
  */
 import React from 'react';
 import Electron from 'electron';
-import Dropdown from '../../../common/components/dropdown.jsx';
-import settings from '../../../system/settings';
+import Dropdown from '~/app/common/components/dropdown';
+import settings from '~/app/system/settings';
 
 export default class Settings extends React.Component {
   constructor() {

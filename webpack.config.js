@@ -1,43 +1,45 @@
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
+const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
+const html = require('html-webpack-plugin');
+const copy = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: {
-    app: ['webpack/hot/dev-server', './entry.jsx'],
-  },
+  entry: path.join(__dirname, 'src', 'index.js'),
   output: {
-    path: './built',
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:8080/built/'
   },
-  devtool: 'source-map',
+  devtool: '#source-map',
   devServer: {
-    contentBase: './',
-    publicPath: 'http://localhost:8080/built/',
-    
+    contentBase: path.join(__dirname, 'dist'),
   },
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+    rules: [
+      { test: /\.js$/, loader: 'babel-loader'},
       { test: /\.css$/, loader: 'style-loader!css-loader' },
-      { test: /\.json$/, loader: "json-loader"}
+      { test: /\.json$/, loader: "json-loader"},
+      { test: /\.(png|jpg|gif)$/, loader: 'file-loader', options: {name: '[path][name].[ext]'}},
+      { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' , options: {name: '[path][name].[ext]'}},
+      { test: /\.(eot|ttf|svg)$/, loader: 'file-loader', options: {name: '[path][name].[ext]'} }
     ]
   },
   node: {
     global: true,
-    fs: fs
+    fs: true
   },
   target: 'electron',
   resolve: {
-    root: path.join(__dirname),
-    fallback: path.join(__dirname, 'node_modules'),
-    modulesDirectories: ['node_modules'],
-    extensions: ['', '.json', '.js', '.jsx', '.scss', '.png', '.jpg', '.jpeg', '.gif']
+    alias: {
+      '~': path.join(__dirname)
+    }
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$"))
+    new html({template: path.join(__dirname, 'src', 'index.html')}),
+    new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
+    new copy([
+      {from: path.join(__dirname, 'images'), to: path.join(__dirname, 'dist')},
+      {from: path.join(__dirname, 'fonts'), to: path.join(__dirname, 'dist')}
+    ])
   ]
 }

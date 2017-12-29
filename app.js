@@ -1,15 +1,21 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * APPLICATION CONTEXTS
+ *
  ***********************************************************************************************************************************************
  * @description
  */
+import electron from 'electron'
+import React from 'react';
+import Dom from 'react-dom';
+import Settings from '~/app/system/settings';
+// import Succotash from '~/app';
+import '~/main.css';
 
 /**
- *
+ * Init App
  */
-export default {
-  Public: function() { return require('./public'); },
-  Private: function() { return require('./private'); }
-};
+Settings.init()
+  .then(settings => {
+    console.log('settings', settings)
+  });

@@ -1,0 +1,8 @@
+{
+  "maxerr": 2,
+  "node":true,
+  "es5": true,
+  "esnext":true,
+  "evil": true,
+  "globals": {"document": true, "btoa": true}
+}

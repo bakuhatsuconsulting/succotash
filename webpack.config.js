@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const html = require('html-webpack-plugin');
 const copy = require('copy-webpack-plugin');
+const externals = require('webpack-node-externals');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -10,13 +11,22 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
-  devtool: '#source-map',
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-  },
+  devtool: 'source-map',
   module: {
     rules: [
-      { test: /\.js$/, loader: 'babel-loader'},
+      { test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+        {
+          loader: "jshint-loader",
+          options: {
+            camelcase: true,
+            emitErrors: false,
+            failOnHint: false
+          }
+        },
+      ]},
+      {test: /\.js$/, loader: 'babel-loader'},
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.json$/, loader: "json-loader"},
       { test: /\.(png|jpg|gif)$/, loader: 'file-loader'},
@@ -32,11 +42,11 @@ module.exports = {
        }
     ]
   },
+  target: 'electron',
   node: {
     global: true,
-    fs: true
+    fs: true,
   },
-  target: 'electron',
   resolve: {
     alias: {
       '~': path.join(__dirname)

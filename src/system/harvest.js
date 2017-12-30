@@ -1,19 +1,12 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * BLINK BUDGET - COMPONENTS
+ * SUCCOTASH - SYSTEM - HARVEST
  ***********************************************************************************************************************************************
  * @description
  */
-import Site from './site';
-import Layout from '@continuum/react-bulma';
+import Harvest from 'harvest';
 
-/**
- * Named Exports
- */
-export {Site, Layout};
+const harvest = new Harvest();
 
-/**
- * Default Export
- */
-export default {Site, Layout};
+console.log(harvest);

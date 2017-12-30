@@ -1,19 +1,13 @@
 'use strict';
 
 /***********************************************************************************************************************************************
- * BLINK BUDGET - COMPONENTS
+ * SUCCOTASH - SYSTEM - STORE
  ***********************************************************************************************************************************************
  * @description
  */
-import Site from './site';
-import Layout from '@continuum/react-bulma';
+import Continuum from '@continuum/continuum';
 
 /**
- * Named Exports
+ * 
  */
-export {Site, Layout};
-
-/**
- * Default Export
- */
-export default {Site, Layout};
+export default new Store();

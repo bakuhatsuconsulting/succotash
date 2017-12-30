@@ -1,12 +1,13 @@
-@import url("./bootstrap.css");
-@import url("./bootstrap-theme.css");
+
+html, body, #content {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
 
 body {
   background-color: #f36c00;
   background-image: linear-gradient(#f68a28, #f36c00);
-  position: absolute;
-  height: 100%;
-  width: 100%;
   top:0;
   left:0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -25,14 +26,13 @@ body #content {
   min-width: 230px;
 }
 
-body #content .content {
-  position: relative;
-  height: calc(100% - 55px);
-  width: 100%;
+body .site-body {
+  height:100%;
+  padding:20px;
 }
 
 .absolute-center {
-  top: 50%;
+  top: calc(50% - 100px);
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);

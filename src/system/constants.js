@@ -19,6 +19,7 @@ export default {
   },
   SETTINGS_FILE: '.succotashrc',
   JSON_DB: 'db.json',
+  SERVER_PORT: 27922,
   ROUTING: {
     NO_AUTH: '#/login',
     NO_ACCESS: '#/'

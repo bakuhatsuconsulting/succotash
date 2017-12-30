@@ -7,13 +7,14 @@
  */
 import {Security} from '@continuum/continuum';
 import Settings from './settings';
+const TOKEN = 'identity';
 
 /**
 
  * @return {[type]} [description]
  */
 export function get() {
-  let token = Settings.get('user');
+  let token = Settings.get(TOKEN);
   let user;
 
   try {
@@ -23,6 +24,11 @@ export function get() {
   }
 
   return user;
+}
+
+export function set(user) {
+  let token = Security.encrypt(user);
+  return Settings.set(TOKEN, token);
 }
 
 export default {get}

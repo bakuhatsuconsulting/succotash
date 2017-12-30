@@ -24,19 +24,7 @@ import login from './login';
 /**
  *
  */
-const views = [
+export default [
   new View('/', main, {protected: true}),
   new View('/login', login, {protected: false})
 ];
-
-/**
- * [router description]
- * @type {Router}
- */
-const router = new Router();
-
-/**
- * Init App
- */
-Settings.init().then(() => {router.register(views).start('#/').set('/')})
-  .catch(e => console.log(e));

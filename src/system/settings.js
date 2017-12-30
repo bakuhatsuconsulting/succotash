@@ -19,7 +19,7 @@ let file = path.join(process.env[Constants.HOME_DIR[process.platform] || Constan
  * [settings description]
  * @type {Object}
  */
-const settings = {};
+const settings = Object.assign({}, Constants);
 
 
 /**

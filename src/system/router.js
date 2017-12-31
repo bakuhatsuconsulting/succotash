@@ -8,6 +8,8 @@
 import Continuum from '@continuum/continuum';
 import Identity from './identity';
 import Constants from './constants';
+import Settings from './settings';
+import Authentication from './authentication';
 // import Access from './access';
 
 /**
@@ -16,6 +18,8 @@ import Constants from './constants';
 export default class Router extends Continuum.Router {
   constructor() {
     super();
+
+    console.log(this.set)
   }
 
   /**
@@ -26,13 +30,11 @@ export default class Router extends Continuum.Router {
    */
   protect(view, router) {
     return new Promise((resolve, reject) => {
-      let identity = Identity.get();
+      let creds = {ACCOUNT_ID: Settings.get('ACCOUNT_ID'), token: Settings.get('token')};
 
-      if(identity) {
-        resolve();
-      } else {
-        router.setRoute(Constants.ROUTING.NO_AUTH);
-      }
+      Authentication.login(creds)
+        .then(resolve)
+        .catch(err =>  router.setRoute('#/login'));
     });
   }
 

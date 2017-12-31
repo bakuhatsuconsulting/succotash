@@ -4,6 +4,7 @@ const fs = require('fs');
 const html = require('html-webpack-plugin');
 const copy = require('copy-webpack-plugin');
 const externals = require('webpack-node-externals');
+const dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -55,6 +56,7 @@ module.exports = {
   plugins: [
     new html({template: path.join(__dirname, 'src', 'index.html')}),
     new webpack.IgnorePlugin(new RegExp("^(fs|ipc)$")),
+    new dotenv()
     // new copy([
     //   {from: path.join(__dirname, 'src', 'assets', 'images', '**', '*'), to: 'assets'},
     //   {from: path.join(__dirname, 'src', 'assets', '**', '*'), to: 'assets'},

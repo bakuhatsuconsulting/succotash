@@ -5,11 +5,15 @@
  ***********************************************************************************************************************************************
  * @description
  */
+
+/*eslint camelcase: ["error", {properties: "never"}]*/
+
 import React from 'react';
 import Components from '~/src/components';
 import Authentication from '~/src/system/authentication';
 import Identity from '~/src/system/identity';
-import Harvest from '~/src/system/harvest';
+import Settings from '~/src/system/settings';
+import Router from '~/src/system/router';
 
 /**
  *
@@ -18,16 +22,25 @@ export default class Login extends React.Component {
   constructor() {
       super();
 
-      this.state = {};
+      this.state = {
+        ACCOUNT_ID: process.env.ACCOUNT_ID || Settings.get('ACCOUNT_ID') || '',
+        token: process.env.ACCESS_TOKEN || Settings.get('token') || ''
+      };
+
   }
 
   login(e) {
     e.preventDefault();
-    console.log(this.state)
-    Authentication.login(this.state)
-      .then(response => console.log(response))
-      .catch(err => console.log(err))
 
+    Authentication.login(this.state)
+      .then(response => Identity.set(response.data))
+      .then(() => Settings.set({'token': this.state.token}))
+      .then(() => Settings.set({'ACCOUNT_ID': this.state.ACCOUNT_ID}))
+      .then(() => window.location.href = '#/')
+      .catch(err => {
+        console.log(err)
+        this.setState({'error': err});
+      });
   }
 
   update(field, e) {
@@ -45,19 +58,18 @@ export default class Login extends React.Component {
             <Components.Layout.Column width='1/2'>
             <form className="form" onSubmit={this.login.bind(this)}>
               <div className="control">
-                <label className="label" htmlFor="subdomain">Harvest Domain:</label>
-                <input type="text" className="input" id="subdomain" defaultValue={this.state.domain}  placeholder="<domain>.harvestapp.com" name="domain" onChange={this.update.bind(this, 'domain')} />
+                <label className="label" htmlFor="account_id">Harvest Account Id: <a href="https://help.getharvest.com/api-v2/authentication-api/authentication/authentication" target="_blank">(?)</a></label>
+                <input type="text" className="input" id="token" defaultValue={this.state.ACCOUNT_ID}  placeholder="Your Harvest Account Id" name="account_id" onChange={this.update.bind(this, 'ACCOUNT_ID')} />
               </div>
-              <div className="control margin-top__med">
-                <label className="label" htmlFor="identifier">Email:</label>
-                <input type="text" className="input" id="identifier" defaultValue={this.state.email}  placeholder="Harvest Email" name="email" onChange={this.update.bind(this, 'email')} />
-              </div>
-              <div className="control margin-top__med">
-                <label className="label" htmlFor="secret">Password</label>
-                <input type="password" className="input" id="secret" defaultValue={this.state.password} placeholder="You may need to create a password in your account settings if you typically log in with Google, etc." name="password" onChange={this.update.bind(this, 'password')} />
+              <div className="control">
+                <label className="label" htmlFor="token">Harvest Token: <a href="https://help.getharvest.com/api-v2/authentication-api/authentication/authentication" target="_blank">(?)</a></label>
+                <input type="text" className="input" id="token" defaultValue={this.state.token}  placeholder="Your Harvest Access Token" name="token" onChange={this.update.bind(this, 'token')} />
               </div>
               <div className="right control margin-top__large">
-                <button onClick={this.login.bind(this)} className="button is-success" disabled={!this.state.domain || !this.state.email || !this.state.password}>Log In</button>
+                <button onClick={this.login.bind(this)} className="button is-success" disabled={!this.state.token || !this.state.ACCOUNT_ID}>Start Tracking!</button>
+                {
+                  this.state.error? <span>Error interacting with harvest.</span> : <span>&nbsp;</span>
+                }
               </div>
             </form>
             </Components.Layout.Column>

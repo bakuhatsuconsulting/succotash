@@ -18,6 +18,7 @@ export default {
     default: 'HOME'
   },
   SETTINGS_FILE: '.succotashrc',
+  HARVEST_API: 'https://api.harvestapp.com/v2',
   JSON_DB: 'db.json',
   SERVER_PORT: 27922,
   ROUTING: {

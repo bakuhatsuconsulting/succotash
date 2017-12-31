@@ -7,28 +7,21 @@
  */
 import {Security} from '@continuum/continuum';
 import Settings from './settings';
-const TOKEN = 'identity';
+const IDENTITY = 'user';
 
 /**
 
  * @return {[type]} [description]
  */
 export function get() {
-  let token = Settings.get(TOKEN);
-  let user;
-
-  try {
-    user = Security.decrypt(token);
-  } catch(e) {
-    // bad token
-  }
-
-  return user;
+  return Settings.get(IDENTITY)
 }
 
 export function set(user) {
-  let token = Security.encrypt(user);
-  return Settings.set(TOKEN, token);
+  let data = {};
+      data[IDENTITY] = user;
+
+  return Settings.set(data);
 }
 
-export default {get}
+export default {get, set}

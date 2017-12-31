@@ -65,7 +65,7 @@ function get(name) {
 function set(data) {
   return new Promise((resolve, reject) => {
     if(!data || data && data.constructor !== Object) {
-      reject('You must pass in an object');
+      reject(`You must pass in an object: ${data}`);
     } else {
       fs.writeFile(file, JSON.stringify(Object.assign(settings, data)), {encoding: 'UTF-8'}, function(err) {
         if(err) {

@@ -21,7 +21,7 @@ module.exports = {
         {
           loader: "jshint-loader",
           options: {
-            camelcase: true,
+            camelcase: false,
             emitErrors: false,
             failOnHint: false
           }

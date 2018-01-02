@@ -29,11 +29,9 @@ app.on('window-all-closed', () => {
 
 app.on('will-quit', function() {
   globalShortcut.unregisterAll();
-
 });
 
 app.on('quit', () => {
-  console.log('quitting')
   server.close();
 })
 
@@ -47,7 +45,7 @@ function createWindow() {
   });
 
   win.on('close', function(e) {
-  
+
   });
 
   win.on('minimize', function(e) {

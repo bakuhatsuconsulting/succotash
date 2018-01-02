@@ -19,8 +19,7 @@ export default {
   },
   SETTINGS_FILE: '.succotashrc',
   HARVEST_API: 'https://api.harvestapp.com/v2',
-  JSON_DB: 'db.json',
-  SERVER_PORT: 27922,
+  SUCCOTASH_API: 'http://127.0.0.1:27922',
   ROUTING: {
     NO_AUTH: '#/login',
     NO_ACCESS: '#/'

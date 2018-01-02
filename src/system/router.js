@@ -18,8 +18,6 @@ import Authentication from './authentication';
 export default class Router extends Continuum.Router {
   constructor() {
     super();
-
-    console.log(this.set)
   }
 
   /**
@@ -30,7 +28,7 @@ export default class Router extends Continuum.Router {
    */
   protect(view, router) {
     return new Promise((resolve, reject) => {
-      let creds = {ACCOUNT_ID: Settings.get('ACCOUNT_ID'), token: Settings.get('token')};
+      let creds = {account_id: Settings.get('account_id'), token: Settings.get('token')};
 
       Authentication.login(creds)
         .then(resolve)

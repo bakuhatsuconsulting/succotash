@@ -23,7 +23,7 @@ export default class Login extends React.Component {
       super();
 
       this.state = {
-        ACCOUNT_ID: process.env.ACCOUNT_ID || Settings.get('ACCOUNT_ID') || '',
+        account_id: process.env.ACCOUNT_ID || Settings.get('account_id') || '',
         token: process.env.ACCESS_TOKEN || Settings.get('token') || ''
       };
 
@@ -35,7 +35,7 @@ export default class Login extends React.Component {
     Authentication.login(this.state)
       .then(response => Identity.set(response.data))
       .then(() => Settings.set({'token': this.state.token}))
-      .then(() => Settings.set({'ACCOUNT_ID': this.state.ACCOUNT_ID}))
+      .then(() => Settings.set({'account_id': this.state.account_id}))
       .then(() => window.location.href = '#/')
       .catch(err => {
         console.log(err)
@@ -59,14 +59,14 @@ export default class Login extends React.Component {
             <form className="form" onSubmit={this.login.bind(this)}>
               <div className="control">
                 <label className="label" htmlFor="account_id">Harvest Account Id: <a href="https://help.getharvest.com/api-v2/authentication-api/authentication/authentication" target="_blank">(?)</a></label>
-                <input type="text" className="input" id="token" defaultValue={this.state.ACCOUNT_ID}  placeholder="Your Harvest Account Id" name="account_id" onChange={this.update.bind(this, 'ACCOUNT_ID')} />
+                <input type="text" className="input" id="token" defaultValue={this.state.account_id}  placeholder="Your Harvest Account Id" name="account_id" onChange={this.update.bind(this, 'account_id')} />
               </div>
               <div className="control">
                 <label className="label" htmlFor="token">Harvest Token: <a href="https://help.getharvest.com/api-v2/authentication-api/authentication/authentication" target="_blank">(?)</a></label>
                 <input type="text" className="input" id="token" defaultValue={this.state.token}  placeholder="Your Harvest Access Token" name="token" onChange={this.update.bind(this, 'token')} />
               </div>
               <div className="right control margin-top__large">
-                <button onClick={this.login.bind(this)} className="button is-success" disabled={!this.state.token || !this.state.ACCOUNT_ID}>Start Tracking!</button>
+                <button onClick={this.login.bind(this)} className="button is-success" disabled={!this.state.token || !this.state.account_id}>Start Tracking!</button>
                 {
                   this.state.error? <span>Error interacting with harvest.</span> : <span>&nbsp;</span>
                 }

@@ -4,6 +4,6 @@
   "es5": true,
   "esnext":true,
   "evil": true,
-  "globals": {"document": true, "btoa": true},
+  "globals": {"document": true, "btoa": true, "window": true},
   "camelcase": true
 }

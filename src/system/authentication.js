@@ -16,7 +16,7 @@ import Axios from 'axios';
  * @return {[type]} [description]
  */
 export function login(creds) {
-  return Axios.get(`${Constants.HARVEST_API}/users/me`, {headers: {'Authorization': 'Bearer ' + creds.token, 'Harvest-Account-ID': creds.ACCOUNT_ID}});
+  return Axios.get(`${Constants.HARVEST_API}/users/me`, {headers: {'Authorization': 'Bearer ' + creds.token, 'Harvest-Account-ID': creds.account_id}});
 }
 
 /**

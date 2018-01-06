@@ -7,13 +7,14 @@
  */
 import Site from './site';
 import Layout from '@continuum/react-bulma';
+import Dropdown from './dropdown';
 
 /**
  * Named Exports
  */
-export {Site, Layout};
+export {Site, Layout, Dropdown};
 
 /**
  * Default Export
  */
-export default {Site, Layout};
+export default {Site, Layout, Dropdown};

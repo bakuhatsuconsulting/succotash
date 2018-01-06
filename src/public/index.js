@@ -9,6 +9,7 @@
 import View from '~/src/system/view';
 import Router from '~/src/system/router';
 import Settings from '~/src/system/settings';
+import 'react-select/dist/react-select.css';
 import '~/src/assets/styles/main.css';
 
 //

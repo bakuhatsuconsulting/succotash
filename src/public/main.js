@@ -17,7 +17,7 @@ export default class Main extends React.Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {projects: {}};
 
     /**
      * [subscriptions description]
@@ -45,7 +45,8 @@ export default class Main extends React.Component {
   }
 
   setRemoteProjects(projects) {
-    console.log(projects)
+    this.state.projects.remote = projects;
+    this.setState(this.state);
   }
 
   render() {
@@ -55,7 +56,10 @@ export default class Main extends React.Component {
         <Components.Site.Section centered classes="is-fluid is-centered projects">
           <Components.Layout.Columns classes="is-centered is-multiline">
             <Components.Layout.Column width={10}>
-              <Domains.Projects.Local.Components.Add />
+              <Domains.Projects.Local.Components.Add projects={this.state.projects.remote}/>
+            </Components.Layout.Column>
+            <Components.Layout.Column width={10}>
+              <hr />
             </Components.Layout.Column>
             <Components.Layout.Column width={10}>
               projects list
